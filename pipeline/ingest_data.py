@@ -49,6 +49,20 @@ def run(year, month, pg_user, pg_password, pg_host, pg_db, pg_port, target_table
 
     prefix = 'https://github.com/DataTalksClub/nyc-tlc-data/releases/download/yellow/'
     url = f'{prefix}/yellow_tripdata_{year}-{month:02d}.csv.gz'
+    
+    taxi_zones_url = 'https://d37ci6vzurychx.cloudfront.net/misc/taxi_zone_lookup.csv'
+
+    df_zones = pd.read_csv(taxi_zones_url)
+
+    df_zones.to_sql(
+        name='zones', 
+        con=engine, 
+        if_exists='replace'
+        )
+    
+    # Explicitly commit the zones table write
+    with engine.connect() as conn:
+        conn.commit()
 
     df_iter = pd.read_csv(
         url,
