@@ -25,10 +25,16 @@ docker run --rm -it \
   --month=1 \
   --chunksize=100000
 
+
+docker run --rm -it \
+  --network=ng-network \
+  taxi_ingest:v001
+
+
 # Postgres Database docker image created within ng-network. 
 # The latter is created using the "docker network create ng-network" command
 docker run -it --rm \
-  -e POSTGRES_USER="root" \
+  -e POSTGRES_USER="root" 
   -e POSTGRES_PASSWORD="root" \
   -e POSTGRES_DB="ny_taxi" \
   -v ny_taxi_postgres_data:/var/lib/postgresql \

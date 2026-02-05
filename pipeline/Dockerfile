@@ -9,11 +9,11 @@ WORKDIR /code
 # This eliminates the need to use 'uv run' in the entrypoint
 ENV PATH="/code/.venv/bin:$PATH"
 
-COPY pyproject.toml .python-version uv.lock ./
+COPY pyproject.toml .python-version uv.lock green_tripdata_2025-11.parquet ./
 
 # install dependencies from uv.lock
 RUN uv sync --locked
 
-COPY ingest_data.py .
+COPY ingest_datasets.py .
 
-ENTRYPOINT ["python", "ingest_data.py"]
+ENTRYPOINT ["python", "ingest_datasets.py"]
